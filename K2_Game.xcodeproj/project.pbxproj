@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D8293F66195207120070382F /* K2Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8293F65195207120070382F /* K2Tile.swift */; };
 		D898A2981951FD3D0032EACF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D898A2971951FD3D0032EACF /* AppDelegate.swift */; };
-		D898A29A1951FD3E0032EACF /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D898A2991951FD3E0032EACF /* GameScene.sks */; };
-		D898A29C1951FD3E0032EACF /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D898A29B1951FD3E0032EACF /* GameScene.swift */; };
-		D898A29E1951FD3E0032EACF /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D898A29D1951FD3E0032EACF /* GameViewController.swift */; };
 		D898A2A11951FD3E0032EACF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D898A29F1951FD3E0032EACF /* Main.storyboard */; };
 		D898A2A31951FD3E0032EACF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D898A2A21951FD3E0032EACF /* Images.xcassets */; };
 		D898A2AF1951FD3E0032EACF /* K2_GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D898A2AE1951FD3E0032EACF /* K2_GameTests.swift */; };
@@ -32,12 +30,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D8293F65195207120070382F /* K2Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = K2Tile.swift; path = Model/K2Tile.swift; sourceTree = "<group>"; };
 		D898A2921951FD3D0032EACF /* K2_Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = K2_Game.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D898A2961951FD3D0032EACF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D898A2971951FD3D0032EACF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D898A2991951FD3E0032EACF /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		D898A29B1951FD3E0032EACF /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		D898A29D1951FD3E0032EACF /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		D898A2A01951FD3E0032EACF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D898A2A21951FD3E0032EACF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D898A2A81951FD3E0032EACF /* K2_GameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = K2_GameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +64,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D8293F67195207260070382F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D8293F65195207120070382F /* K2Tile.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		D898A2891951FD3D0032EACF = {
 			isa = PBXGroup;
 			children = (
@@ -90,10 +94,8 @@
 			isa = PBXGroup;
 			children = (
 				D898A2971951FD3D0032EACF /* AppDelegate.swift */,
-				D898A2991951FD3E0032EACF /* GameScene.sks */,
-				D898A29B1951FD3E0032EACF /* GameScene.swift */,
-				D898A29D1951FD3E0032EACF /* GameViewController.swift */,
 				D898A29F1951FD3E0032EACF /* Main.storyboard */,
+				D8293F67195207260070382F /* Model */,
 				D898A2C41951FFED0032EACF /* Controller */,
 				D898A2BF1951FFE40032EACF /* Views */,
 				D898A2B81951FFD90032EACF /* State */,
@@ -235,7 +237,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D898A2A31951FD3E0032EACF /* Images.xcassets in Resources */,
-				D898A29A1951FD3E0032EACF /* GameScene.sks in Resources */,
 				D898A2A11951FD3E0032EACF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,12 +256,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D898A2C31951FFE40032EACF /* K2ScoreView.swift in Sources */,
-				D898A29C1951FD3E0032EACF /* GameScene.swift in Sources */,
 				D898A2C21951FFE40032EACF /* K2GridView.swift in Sources */,
 				D898A2BD1951FFD90032EACF /* K2GameManager.swift in Sources */,
 				D898A2BE1951FFD90032EACF /* K2Theme.swift in Sources */,
-				D898A29E1951FD3E0032EACF /* GameViewController.swift in Sources */,
 				D898A2C61951FFED0032EACF /* MainViewController.swift in Sources */,
+				D8293F66195207120070382F /* K2Tile.swift in Sources */,
 				D898A2981951FD3D0032EACF /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -449,6 +449,7 @@
 				D898A2B41951FD3E0032EACF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D898A2B51951FD3E0032EACF /* Build configuration list for PBXNativeTarget "K2_GameTests" */ = {
 			isa = XCConfigurationList;
@@ -457,6 +458,7 @@
 				D898A2B71951FD3E0032EACF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -99,4 +99,12 @@ class DefaultTheme: NSObject {
     func regularFontName() -> NSString {
         return "AvenirNext-Regular"
     }
+    
+    func fontForTile() -> UIFont {
+        return UIFont(name: self.boldFontName(), size: 32)
+    }
+    
+    func colorForTileText() -> UIColor {
+        return UIColor.whiteColor()
+    }
 }

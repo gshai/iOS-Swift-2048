@@ -23,7 +23,6 @@ class K2GridView: UIView {
         self.init(frame: CGRect(x: 0, y: 0, width: 280, height: 280))
     }
     
-    /** iOS8 must be */
     init(coder aDecoder: NSCoder!)
     {
         super.init(coder: aDecoder)
@@ -78,6 +77,22 @@ class K2GridView: UIView {
         return height
     }
     
+    func addTile(tile: K2Tile) {
+        
+        // Set the frame for the location
+        let x:Float = Float(tile.position.0) * (edgeWidth + bordertWidth) + bordertWidth
+        let y:Float = Float(tile.position.1) * (edgeWidth + bordertWidth) + bordertWidth
+        let frame:CGRect = CGRect(x: x, y: y, width: edgeWidth, height: edgeWidth)
+        tile.frame = frame
+        tile.alpha = 0
+        self.addSubview(tile)
+        
+        // Animate view
+        UIView.animateWithDuration(0.8, animations: ({
+                tile.alpha = 1
+            })
+        )        
+    }
 }
 
 

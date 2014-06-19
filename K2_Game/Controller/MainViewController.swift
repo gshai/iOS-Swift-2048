@@ -6,11 +6,10 @@
 //  Copyright (c) 2014 Gilad Shai. All rights reserved.
 //
 
-import Foundation
-import SpriteKit
+import UIKit
 
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, GameDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -23,7 +22,7 @@ class MainViewController: UIViewController {
     @IBOutlet var subtitleLabel: UILabel
     @IBOutlet var scoreView: ScoreView
     @IBOutlet var bestView: ScoreView
-    @IBOutlet var gridView : UIView
+    @IBOutlet var gridView : K2GridView
     
     var gameManager: K2GameManager = K2GameManager()
     
@@ -32,6 +31,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         self.setupGame()
         self.setupView()
+        self.gameManager.gameDelegate = self
     }
     
     // Init Game
@@ -55,28 +55,50 @@ class MainViewController: UIViewController {
         self.bestView.updateAppearance()
         self.bestView.titleLabel.text = "Best"
         
-        // Set grid 
-        let grid: K2GridView = K2GridView()
-        self.gridView.addSubview(grid)
+        // Set grid
+//        self.gridView = K2GridView()
+//        self.view.addSubview(self.gridView)
     }
     
-    
-    func startGame() {
-        
-        // Clear old game
-        self.gameManager.resetGame()
-        
-        // Configure the view.
-        let skView: SKView = self.view as SKView
+    // Clear Tiles From Playboard
+    func clearTilesFromPlayboard() {
+        for aView in self.gridView.subviews {
+            if aView.isMemberOfClass(UIView) {
+                UIView(aView.removeFromSuperview())
+            }
+        }
     }
-    
     
     // Button actions
     @IBAction func restartAction(sender : UIButton) {
-        println("tapped button")
+        println("start game")
+        self.startGame()
     }
     @IBAction func settingsAction(sender : UIButton) {
         println("tapped settings button")
     }
+    
+    
+    // MARK: Game Play
+    func startGame() {
+        
+        // Clear old game (manager)
+        self.gameManager.resetGame()
+        
+        // Clear old game (view)
+        self.clearTilesFromPlayboard()
+        
+        // Get first step
+        self.gameManager.firstStep()
+    }
+
+    
+    // Game Protocol
+    func showNewTile(tile: K2Tile) {
+        println("tile: /(tile)")
+        
+        self.gridView.addTile(tile)
+    }
+    
 }
 
