@@ -32,6 +32,7 @@ class MainViewController: UIViewController, GameDelegate {
         self.setupGame()
         self.setupView()
         self.gameManager.gameDelegate = self
+        addGestures()
     }
     
     // Init Game
@@ -53,16 +54,12 @@ class MainViewController: UIViewController, GameDelegate {
         self.scoreView.updateAppearance()
         self.scoreView.titleLabel.text = "Score"
         self.bestView.updateAppearance()
-        self.bestView.titleLabel.text = "Best"
-        
-        // Set grid
-//        self.gridView = K2GridView()
-//        self.view.addSubview(self.gridView)
+        self.bestView.titleLabel.text = "Best"        
     }
     
     // Clear Tiles From Playboard
     func clearTilesFromPlayboard() {
-        for aView in self.gridView.subviews {
+        for aView:UIView! in self.gridView.subviews {
             if aView.isMemberOfClass(UIView) {
                 UIView(aView.removeFromSuperview())
             }
@@ -76,17 +73,49 @@ class MainViewController: UIViewController, GameDelegate {
     }
     @IBAction func settingsAction(sender : UIButton) {
         println("tapped settings button")
+        self.clearOldGame()
+    }
+    
+    // Gestures
+    func addGestures() {
+        var swipeHandler = UISwipeGestureRecognizer(target: self, action: "gestureRecognizer:")
+        swipeHandler.direction = .Right
+        self.gridView.addGestureRecognizer(swipeHandler)
+        
+        swipeHandler = UISwipeGestureRecognizer(target: self, action: "gestureRecognizer:")
+        swipeHandler.direction = .Left
+        self.gridView.addGestureRecognizer(swipeHandler)
+
+        swipeHandler = UISwipeGestureRecognizer(target: self, action: "gestureRecognizer:")
+        swipeHandler.direction = .Up
+        self.gridView.addGestureRecognizer(swipeHandler)
+        
+        swipeHandler = UISwipeGestureRecognizer(target: self, action: "gestureRecognizer:")
+        swipeHandler.direction = .Down
+        self.gridView.addGestureRecognizer(swipeHandler)
+    }
+    
+    func gestureRecognizer(sender: UISwipeGestureRecognizer!) {
+        
+        gameManager.shiftTiles(sender.direction)
+        
+        
+        self.gridView.endEditing(true)
     }
     
     
     // MARK: Game Play
-    func startGame() {
-        
+    func clearOldGame() {
         // Clear old game (manager)
         self.gameManager.resetGame()
         
         // Clear old game (view)
         self.clearTilesFromPlayboard()
+    }
+    
+    func startGame() {
+        // Clear old game
+        self.clearOldGame()
         
         // Get first step
         self.gameManager.firstStep()
@@ -95,8 +124,6 @@ class MainViewController: UIViewController, GameDelegate {
     
     // Game Protocol
     func showNewTile(tile: K2Tile) {
-        println("tile: /(tile)")
-        
         self.gridView.addTile(tile)
     }
     

@@ -10,9 +10,14 @@ import UIKit
 
 class K2Tile: UIView {
     
-    var value:Int = 2
-    var position = (0, 0)
     var valueLabel: UILabel!
+    var value:Int = 2 {
+    willSet {
+        valueLabel.text = String(newValue)
+    }
+    }
+    var position = (0, 0)
+    var needsMerge: Bool = false
     
     init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,11 +38,14 @@ class K2Tile: UIView {
         self.init(frame: CGRect(x: 0, y: 0, width: 65, height: 65))
     }
     
-    init(coder aDecoder: NSCoder!)
-    {
+    init(coder aDecoder: NSCoder!) {
         super.init(coder: aDecoder)
     }
-
     
-    
+    func setRandomValue() {
+        let x:Int = Int(arc4random_uniform(2))
+        self.value = x
+        
+        // TODO: place this is the setter of self.value
+    }
 }

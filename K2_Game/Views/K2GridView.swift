@@ -12,7 +12,7 @@ class K2GridView: UIView {
     
     let bordertWidth: Float = 4.0
     let edgeWidth: Float = 65.0
-    let numberOfSegments: Int = 4
+    let numberOfSegments: Int = K2GameManager().numberOfSegments
     
     init(frame: CGRect) {
         super.init(frame: frame)
