@@ -80,19 +80,59 @@ class K2GridView: UIView {
     func addTile(tile: K2Tile) {
         
         // Set the frame for the location
-        let x:Float = Float(tile.position.0) * (edgeWidth + bordertWidth) + bordertWidth
-        let y:Float = Float(tile.position.1) * (edgeWidth + bordertWidth) + bordertWidth
+        // position (row, column) (0,0) is the upper left corner
+        let x:Float = Float(tile.position.1) * (edgeWidth + bordertWidth) + bordertWidth
+        let y:Float = Float(tile.position.0) * (edgeWidth + bordertWidth) + bordertWidth
         let frame:CGRect = CGRect(x: x, y: y, width: edgeWidth, height: edgeWidth)
         tile.frame = frame
         tile.alpha = 0
         self.addSubview(tile)
         
         // Animate view
-        UIView.animateWithDuration(0.8, animations: ({
+        UIView.animateWithDuration(0.4, animations: ({
                 tile.alpha = 1
             })
         )        
     }
+    
+    func slideTile(tile: K2Tile) {
+        println("sliding tile: \(tile)")
+        UIView.animateWithDuration(0.3, animations: ({
+            let x:Float = Float(tile.position.1) * (self.edgeWidth + self.bordertWidth) + self.bordertWidth
+            let y:Float = Float(tile.position.0) * (self.edgeWidth + self.bordertWidth) + self.bordertWidth
+            let frame:CGRect = CGRect(x: x, y: y, width: self.edgeWidth, height: self.edgeWidth)
+            tile.frame = frame
+            })
+        )
+    }
+    
+    func animateTiles(tiles: Array<K2Tile>) {
+        
+        // Slide tiles
+        for tile in tiles {
+            self.slideTile(tile)
+        }
+        
+        // Remove old tiles
+        for obj: AnyObject in self.subviews {
+            if let oldTile = obj as? K2Tile {
+                
+                let contained = tiles.contains(oldTile)
+                if !contained {
+                    oldTile.removeFromSuperview()
+                }
+            }
+        }
+    }
+    
+    func clear () {
+        for obj: AnyObject in self.subviews {
+            if let oldTile = obj as? K2Tile {
+                    oldTile.removeFromSuperview()
+                }
+        }
+    }
 }
+
 
 

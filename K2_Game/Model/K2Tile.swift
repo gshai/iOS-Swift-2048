@@ -11,10 +11,11 @@ import UIKit
 class K2Tile: UIView {
     
     var valueLabel: UILabel!
-    var value:Int = 2 {
-    willSet {
-        valueLabel.text = String(newValue)
-    }
+    var value: Int = 2
+    {
+        willSet {
+            valueLabel.text = String(newValue)
+        }
     }
     var position = (0, 0)
     var needsMerge: Bool = false
@@ -31,7 +32,7 @@ class K2Tile: UIView {
         self.addSubview(valueLabel)
         
         // Setup Background
-        self.backgroundColor = DefaultTheme().colorForLevel(self.value)
+        self.backgroundColor = DefaultTheme().colorForLevel(value)
     }
     
     convenience init() {
@@ -43,9 +44,10 @@ class K2Tile: UIView {
     }
     
     func setRandomValue() {
-        let x:Int = Int(arc4random_uniform(2))
-        self.value = x
+        let x: Int = Int(arc4random_uniform(2))
+        value = x+1
         
         // TODO: place this is the setter of self.value
     }
+    
 }

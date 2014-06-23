@@ -59,11 +59,7 @@ class MainViewController: UIViewController, GameDelegate {
     
     // Clear Tiles From Playboard
     func clearTilesFromPlayboard() {
-        for aView:UIView! in self.gridView.subviews {
-            if aView.isMemberOfClass(UIView) {
-                UIView(aView.removeFromSuperview())
-            }
-        }
+        self.gridView.clear()
     }
     
     // Button actions
@@ -127,5 +123,13 @@ class MainViewController: UIViewController, GameDelegate {
         self.gridView.addTile(tile)
     }
     
+    func refreshGridStatus(board: Dictionary<Int, K2Tile>) {
+        let board = self.gameManager.giveMeTheBoard()
+        let tiles = Array(board.values)
+        for value in tiles {
+            println("\(value.position) \(value.value)")
+        }
+        self.gridView.animateTiles(tiles)
+    }
 }
 

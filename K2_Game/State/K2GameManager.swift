@@ -12,30 +12,15 @@ class K2GameManager {
     
     let numberOfSegments: Int = 4
     var currentScore: Int = 0
-    var tiles: Array <K2Tile> = []
     var board: Dictionary<Int, K2Tile>  = [:]
     var gameDelegate: GameDelegate?
 
     init () {
-        println("init Game Manager")
         self.resetGame()
-//        self.setupGameGrid()
-    }
-    
-    func setupGameGrid() {
-        for row in 0..numberOfSegments {
-            for column in 0..numberOfSegments {
-                var tile: K2Tile = K2Tile()
-                tile.position = (column, row)
-                self.showNewTile(tile)
-            }
-        }
-        
     }
     
     func resetGame () {
         self.currentScore = 0
-        self.tiles.removeAll(keepCapacity: true)
         self.board = [:]
     }
     
@@ -49,23 +34,23 @@ class K2GameManager {
         tile1.setRandomValue()
         
         var tile2: K2Tile = K2Tile()
-        tile2.position = (0, 2)
-        tile2.setRandomValue()
+        tile2.position = (2, 0)
+        tile2.value = Int(5)
         
         var tile3: K2Tile = K2Tile()
         tile3.position = (2, 2)
         tile3.value = Int(4)
 
         var tile4: K2Tile = K2Tile()
-        tile4.position = (3, 2)
+        tile4.position = (2, 3)
         tile4.value = Int(4)
 
         
         // Save the new tiles
-        self.tiles.append(tile4)
-        self.tiles.append(tile3)
-        self.tiles.append(tile1)
-        self.tiles.append(tile2)
+        self.board[tile1.position.0*numberOfSegments + tile1.position.1] = tile1
+        self.board[tile2.position.0*numberOfSegments + tile2.position.1] = tile2
+        self.board[tile3.position.0*numberOfSegments + tile3.position.1] = tile3
+        self.board[tile4.position.0*numberOfSegments + tile4.position.1] = tile4
 
 
         // Alert the VC
@@ -80,45 +65,84 @@ class K2GameManager {
         gameDelegate?.showNewTile(tile)
     }
 
+    func refreshGridStatus(board: Dictionary<Int, K2Tile>) {
+        gameDelegate?.refreshGridStatus(self.board)
+    }
 
     // MARK: matrix calculations
     func shiftTiles(direction: UISwipeGestureRecognizerDirection) {
         switch direction {
-            
         case UISwipeGestureRecognizerDirection.Right:
             
-            // Loop over tiles in line
-            var i = numberOfSegments - 1
-            while i >= 0 {
-                println("shift right line: \(i)")
+            // Loop over lines
+            for row in 0..numberOfSegments {
+                let endRowIndex = row*numberOfSegments + numberOfSegments - 1
                 
-                // Get row at index i
-                let row = self.filterByRow(i)
-                
-                // If there are tiles in the row
-                if row.count > 0 {
+                // Loop over tiles in a line from the end to the start
+                for column in 0..numberOfSegments {
+                    var tileIndex = row*numberOfSegments + (numberOfSegments - column - 1)
                     
-                    // Shift the tile right
-                    let sortedRow = sort(row, sorterByColumnACS)
-                    for tile:K2Tile in sortedRow {
-                        println("position: \(tile.position) value: \(tile.value)")
-                        if self.canShiftTile(tile, row: sortedRow, direction:direction) {
+                    // Reached the end of the row
+                    if tileIndex == endRowIndex {
+                        continue
+                    }
+                    
+                    // Empty cell
+                    if self.board[tileIndex] == nil {
+                        continue
+                    }
+                    
+                    // Bubble up valid tile
+                    if self.board[tileIndex] {
+                        var tile: K2Tile! = board[tileIndex]
+                        let tileValue: Int? = tile?.value
+                        println("processing tile at index: \(tileIndex) with value: \(tileValue)")
+                        
+                        // Bubble up
+                        for i in tileIndex+1...endRowIndex {
                             
+                            // Adjusent tile
+                            var nextTile: K2Tile? = board[i]
+                            let nextValue = nextTile?.value
+                            let merged: Bool! = nextTile?.needsMerge
+                            
+                            
+                            // If the cell is empty move tile to new location
+                            if nextTile == nil {
+                                tile.position = (row, self.columnFromIndex(i))
+                                self.board[i] = tile
+                                self.board[i-1] = nil
+                                println("new tile location: \(self.board[i]?.position)")
+                                
+                            // If the cell has value check if we can merge
+                            } else if tileValue == nextValue  {
+                                if !merged {
+                                    tile.needsMerge = true
+                                    tile.value = tile.value * 2
+                                    tile.position = (row, self.columnFromIndex(i))
+                                    self.board[i] = tile
+                                    self.board[i-1] = nil
+                                    println("new tile location with merge: \(self.board[i]?.position) \(self.board[i]?.value)")
+                                }
+                            }
                         }
                     }
                 }
-                i--
             }
-        case UISwipeGestureRecognizerDirection.Left:
-            self.filterByRow(1)
-        case UISwipeGestureRecognizerDirection.Up:
-            self.filterByRow(2)
-        case UISwipeGestureRecognizerDirection.Down:
-            self.filterByRow(3)
         default:
             println("none")
         }
-
+        
+        // debug print
+        for row in 0..numberOfSegments {
+            for column in 0..numberOfSegments {
+                var i = row*numberOfSegments + column
+                let n = board[i]?.value
+            }
+        }
+        
+        // Update view
+        self.refreshGridStatus(self.board)
     }
     
     func canShiftTile(tile: K2Tile, row:Array<K2Tile>, direction:UISwipeGestureRecognizerDirection) -> Bool {
@@ -129,6 +153,7 @@ class K2GameManager {
         if tile.position.1 < numberOfSegments {
             
         }
+        return false
     }
     
     
@@ -147,21 +172,17 @@ class K2GameManager {
         return this.position.1 < that.position.1
     }
 
-    func filterByRow(row: Int) -> Array<K2Tile> {
-        var filtered = self.tiles.filter {
-            $0.position.1 == row
-        }
-        return filtered
+    func columnFromIndex(index: Int) -> (Int) {
+        let column = index % numberOfSegments
+        return column
     }
-    func filterByColumn(column: Int) -> Array<K2Tile> {
-        var filtered = self.tiles.filter {
-            $0.position.0 == column
-        }
-        return filtered
+    
+    func giveMeTheBoard() -> Dictionary<Int, K2Tile> {
+        return self.board
     }
-
 }
 
 protocol GameDelegate {
     func showNewTile(tile: K2Tile)
+    func refreshGridStatus(board: Dictionary<Int, K2Tile>)
 }

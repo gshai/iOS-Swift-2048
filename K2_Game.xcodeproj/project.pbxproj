@@ -17,6 +17,7 @@
 		D898A2C21951FFE40032EACF /* K2GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D898A2C01951FFE40032EACF /* K2GridView.swift */; };
 		D898A2C31951FFE40032EACF /* K2ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D898A2C11951FFE40032EACF /* K2ScoreView.swift */; };
 		D898A2C61951FFED0032EACF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D898A2C51951FFED0032EACF /* MainViewController.swift */; };
+		D8A8C770195779030025C045 /* Array+extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A8C76F195779030025C045 /* Array+extention.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		D898A2C01951FFE40032EACF /* K2GridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = K2GridView.swift; sourceTree = "<group>"; };
 		D898A2C11951FFE40032EACF /* K2ScoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = K2ScoreView.swift; sourceTree = "<group>"; };
 		D898A2C51951FFED0032EACF /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		D8A8C76F195779030025C045 /* Array+extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Array+extention.swift"; path = "Extentions/Array+extention.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 			children = (
 				D898A2971951FD3D0032EACF /* AppDelegate.swift */,
 				D898A29F1951FD3E0032EACF /* Main.storyboard */,
+				D8A8C7711957790E0025C045 /* Extentions */,
 				D8293F67195207260070382F /* Model */,
 				D898A2C41951FFED0032EACF /* Controller */,
 				D898A2BF1951FFE40032EACF /* Views */,
@@ -154,6 +157,14 @@
 				D898A2C51951FFED0032EACF /* MainViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		D8A8C7711957790E0025C045 /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				D8A8C76F195779030025C045 /* Array+extention.swift */,
+			);
+			name = Extentions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8A8C770195779030025C045 /* Array+extention.swift in Sources */,
 				D898A2C31951FFE40032EACF /* K2ScoreView.swift in Sources */,
 				D898A2C21951FFE40032EACF /* K2GridView.swift in Sources */,
 				D898A2BD1951FFD90032EACF /* K2GameManager.swift in Sources */,
