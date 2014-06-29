@@ -9,7 +9,7 @@
 import UIKit
 
 
-class MainViewController: UIViewController, GameDelegate {
+class MainViewController: UIViewController, GameDelegate, UIAlertViewDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -107,6 +107,9 @@ class MainViewController: UIViewController, GameDelegate {
         
         // Clear old game (view)
         self.clearTilesFromPlayboard()
+        
+        // Enable user interaction
+        gridView.userInteractionEnabled = true
     }
     
     func startGame() {
@@ -117,6 +120,21 @@ class MainViewController: UIViewController, GameDelegate {
         self.gameManager.firstStep()
     }
 
+    func gameOver() {
+        println("GAME OVER")
+        showOverlayWithFinalScore()
+        gridView.userInteractionEnabled = false
+    }
+
+    func showOverlayWithFinalScore() {
+        var alert:UIAlertView = UIAlertView()
+        alert.title = "Game Over"
+        alert.message = "Your score is "
+        alert.delegate = self
+        alert.addButtonWithTitle("Cancel")
+        alert.addButtonWithTitle("Play Again")
+        alert.show()
+    }
     
     // Game Protocol
     func showNewTile(tile: K2Tile) {
@@ -124,12 +142,30 @@ class MainViewController: UIViewController, GameDelegate {
     }
     
     func refreshGridStatus(board: Dictionary<Int, K2Tile>) {
+        
         let board = self.gameManager.giveMeTheBoard()
         let tiles = Array(board.values)
-        for value in tiles {
-            println("\(value.position) \(value.value)")
-        }
         self.gridView.animateTiles(tiles)
+        
+        // Next step
+        self.gameManager.nextStep()
+    }
+    
+    func increaseScore(points: Int) {
+        self.scoreView.score += points
+    }
+    
+    
+    // UIAlert Protocol
+    func alertView(alertView: UIAlertView!, clickedButtonAtIndex buttonIndex: Int) {
+        switch buttonIndex {
+        case 0 :
+            clearOldGame()
+        case 1 :
+            startGame()
+        default :
+            println()
+        }
     }
 }
 

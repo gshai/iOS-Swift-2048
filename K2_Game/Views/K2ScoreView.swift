@@ -15,9 +15,14 @@ class ScoreView: UIView {
     
     @IBOutlet var scoreLabel: UILabel
     @IBOutlet var titleLabel: UILabel
-    
+    var score: Int {
+    didSet {
+        self.scoreLabel.text = String(self.score)
+    }
+    }
     
     init(frame: CGRect) {
+        self.score = 0
         super.init(frame: frame)
     }
     
@@ -28,12 +33,12 @@ class ScoreView: UIView {
     // iOS8 must be
     init(coder aDecoder: NSCoder!)
     {
+        self.score = 0
         super.init(coder: aDecoder)
     }
     
     // Update appearance func (font, color)
     func updateAppearance() {
-        println("updateAppearance")
         let theme = DefaultTheme()
         self.layer.cornerRadius = 2
         self.layer.masksToBounds = true

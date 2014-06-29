@@ -5,6 +5,7 @@
 //  Created by Gilad Shai on 6/16/14.
 //  Copyright (c) 2014 Gilad Shai. All rights reserved.
 //
+//  Based on Danqing's code https://github.com/ik/2048.git
 
 //let HEX(c)       [UIColor colorWithRed:((c>>16)&0xFF)/255.0 green:((c>>8)&0xFF)/255.0 blue:(c&0xFF)/255.0 alpha:1.0]
 
@@ -23,42 +24,35 @@ class DefaultTheme: NSObject {
     }
 
     func colorForLevel(level: Int) -> UIColor {
-        return self.RGB(238, g: 228, b: 218)
-        /*
         switch (level) {
         case 1:
             return self.RGB(238, g: 228, b: 218)
         case 2:
             return self.RGB(237, g: 224, b: 200);
-        case 3:
-            return self.RGB(242, 177, 121);
         case 4:
-            return self.RGB(245, 149, 99);
-        case 5:
-            return self.RGB(246, 124, 95);
-        case 6:
-            return self.RGB(246, 94, 59);
-        case 7:
-            return self.RGB(237, 207, 114);
+            return self.RGB(242, g: 177, b: 121);
         case 8:
-            return self.RGB(237, 204, 97);
-        case 9:
-            return self.RGB(237, 200, 80);
-        case 10:
-            return self.RGB(237, 197, 63);
-        case 11:
-            return self.RGB(237, 194, 46);
-        case 12:
-            return self.RGB(173, 183, 119);
-        case 13:
-            return self.RGB(170, 183, 102);
-        case 14:
-            return self.RGB(164, 183, 79);
-        case 15:
+            return self.RGB(245, g: 149, b: 99);
+        case 16:
+            return self.RGB(246, g: 124, b: 95);
+        case 32:
+            return self.RGB(246, g: 94, b: 59);
+        case 64:
+            return self.RGB(237, g: 207, b: 114);
+        case 128:
+            return self.RGB(237, g: 204, b: 97);
+        case 256:
+            return self.RGB(237, g: 200, b: 80);
+        case 512:
+            return self.RGB(237, g: 197, b: 63);
+        case 1024:
+            return self.RGB(237, g: 194, b: 46);
+        case 2048:
+            return self.RGB(173, g: 183, b: 119);
         default:
-            return self.RGB(161, 183, 63);
+            return self.RGB(161, g: 183, b: 63);
         }
-        */
+        
     }
 
     

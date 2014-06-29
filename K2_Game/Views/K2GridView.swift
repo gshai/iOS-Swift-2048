@@ -96,21 +96,49 @@ class K2GridView: UIView {
     }
     
     func slideTile(tile: K2Tile) {
-        println("sliding tile: \(tile)")
-        UIView.animateWithDuration(0.3, animations: ({
-            let x:Float = Float(tile.position.1) * (self.edgeWidth + self.bordertWidth) + self.bordertWidth
-            let y:Float = Float(tile.position.0) * (self.edgeWidth + self.bordertWidth) + self.bordertWidth
-            let frame:CGRect = CGRect(x: x, y: y, width: self.edgeWidth, height: self.edgeWidth)
-            tile.frame = frame
-            })
+        UIView.animateWithDuration(0.3,
+            animations: ({
+                let x:Float = Float(tile.position.1) * (self.edgeWidth + self.bordertWidth) + self.bordertWidth
+                let y:Float = Float(tile.position.0) * (self.edgeWidth + self.bordertWidth) + self.bordertWidth
+                let frame:CGRect = CGRect(x: x, y: y, width: self.edgeWidth, height: self.edgeWidth)
+                tile.frame = frame
+            }),
+            completion: {
+                (complete: Bool) in
+                self.userInteractionEnabled = true
+            }
         )
     }
     
+    func animateMergeTile(tile: K2Tile) {
+        let oldFrame = tile.frame
+        tile.frame = CGRectInset(tile.frame, -5, -5)
+        tile.value = tile.value * 2
+        tile.needsMerge = false
+        UIView.animateWithDuration(0.2,
+            animations: ({
+                tile.frame = oldFrame
+            }),
+            completion: {
+                (complete: Bool) in
+                self.userInteractionEnabled = true
+            }
+        )
+    }
+    
+    
     func animateTiles(tiles: Array<K2Tile>) {
         
-        // Slide tiles
+        self.userInteractionEnabled = false
+        
         for tile in tiles {
+            // Slide tiles
             self.slideTile(tile)
+            
+            // Merge tiles
+            if tile.needsMerge {
+                animateMergeTile(tile)
+            }
         }
         
         // Remove old tiles
